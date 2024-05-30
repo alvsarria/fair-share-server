@@ -2,14 +2,18 @@ const { Schema, model } = require("mongoose");
 
 const groupSchema = new Schema({
   name: { type: String, required: true },
-  expenses: {
+  expenses: [{
     type: Schema.Types.ObjectId,
     ref: "Expense"
-  },
-  users: {
+  }],
+  admin: {
     type: Schema.Types.ObjectId,
     ref: "User"
-  }
+  },
+  users: [{
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }]
 },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
