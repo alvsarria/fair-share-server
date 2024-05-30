@@ -9,7 +9,7 @@ const Expense = require("../models/Expense.model")
 // Defining initial request for gome, GET all projects
 router.get("/", (req, res, next) => {
   Group.find()
-  // .populate("expenses users")
+  .populate("expenses users")
     .then((allGroups) => res.json(allGroups))
     .catch((err) => res.json(err));
 });
