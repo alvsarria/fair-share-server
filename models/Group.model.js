@@ -6,6 +6,10 @@ const groupSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Expense"
   }],
+  admin: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
   users: [{
     type: Schema.Types.ObjectId,
     ref: "User"
