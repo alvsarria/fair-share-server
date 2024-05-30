@@ -6,11 +6,10 @@ const router = express.Router();
 const Group = require("../models/Group.model")
 const Expense = require("../models/Expense.model")
 
-// Routes for home page in the client, groupId for HHTP request needs to be sent 
-// through the request body
+// Routes for groups without req.params
 
 // Gets all projects - Home Page
-router.get("/groups", (req, res, next) => {
+router.get("/", (req, res, next) => {
   Group.find()
     // .populate("expenses users")
     .then((allGroups) => res.json(allGroups))
@@ -18,7 +17,7 @@ router.get("/groups", (req, res, next) => {
 });
 
 // Creates new group for expenses - Home Page
-router.post("/groups", (req, res, next) => {
+router.post("/", (req, res, next) => {
   const { name, userId, users } = req.body;
 
   Group.create({ name, expenses: [], admin: userId, users })
@@ -27,7 +26,7 @@ router.post("/groups", (req, res, next) => {
 });
 
 // Deletes group - Home Page
-router.delete("/groups", (req, res, next) => {
+router.delete("/", (req, res, next) => {
   const { _id, userId } = req.body;
 
   // Checks _id is a valid object type for our model
@@ -53,10 +52,10 @@ router.delete("/groups", (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
-// Routes for details page in the client, groupId as request parameter
+// Routes for groups with req.params
 
-// 
-router.get("/groups/:groupId", (req, res, next) => {
+// Gets a specific group based on url params from details page - Details page
+router.get("/:groupId", (req, res, next) => {
   const { groupId } = req.params;
 
   // Checks _id is a valid object type for our model
@@ -71,7 +70,8 @@ router.get("/groups/:groupId", (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
-router.put("/groups/:groupId", (req, res, next) => {
+// Updates group information based on url params from details page - Details page
+router.put("/:groupId", (req, res, next) => {
   const { groupId } = req.params;
 
   // Checks _id is a valid object type for our model
@@ -85,7 +85,8 @@ router.put("/groups/:groupId", (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
-router.delete("/groups/:groupId", (req, res, next) => {
+// Deletes group based on params from details page - Details page
+router.delete("/:groupId", (req, res, next) => {
   const { userId } = req.body;
   const { groupId } = req.params;
 

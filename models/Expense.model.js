@@ -2,7 +2,20 @@ const { Schema, model } = require("mongoose");
 
 const expenseSchema = new Schema({
   name: { type: String, required: true },
-  concept: { type: String, required: true },
+  concept: {
+    type: String, required: true, enum: [
+      "Housing",
+      "Food",
+      "Transportation",
+      "Utilities",
+      "Insurance",
+      "Healthcare",
+      "Entertainment",
+      "Education",
+      "Personal Care",
+      "Savings"
+    ]
+  },
   amount: { type: Number, min: 0 },
   group: {
     type: Schema.Types.ObjectId,

@@ -23,7 +23,10 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
 const groupRoutes = require("./routes/group.routes");
-app.use("", groupRoutes);
+app.use("/groups", groupRoutes);
+
+const expenseRoutes = require("./routes/expense.routes");
+app.use("/expenses", expenseRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
