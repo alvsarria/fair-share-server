@@ -9,8 +9,9 @@ const Expense = require("../models/Expense.model")
 // Routes for groups without req.params
 
 // Gets all projects - Home Page
-router.get("/", (req, res, next) => {
-  Group.find()
+router.get("/:userId", (req, res, next) => {
+  const {userId} = req.params;
+  Group.find({ users: userId })
     // .populate("expenses users")
     .then((allGroups) => res.json(allGroups))
     .catch((error) => res.json(error));
