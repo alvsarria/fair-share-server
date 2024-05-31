@@ -5,6 +5,10 @@ require("dotenv").config();
 // ℹ️ Connects to the database
 require("./db");
 
+
+// Require necessary (isAuthenticated) middleware in order to control access to specific routes
+const { isAuthenticated } = require("./middleware/jwt.middleware.js");
+
 // Handles http requests (express is node js framework)
 // https://www.npmjs.com/package/express
 const express = require("express");
@@ -23,10 +27,10 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
 const groupRoutes = require("./routes/group.routes");
-app.use("/groups", groupRoutes);
+app.use("/groups", isAuthenticated, groupRoutes);
 
 const expenseRoutes = require("./routes/expense.routes");
-app.use("/expenses", expenseRoutes);
+app.use("/expenses", isAuthenticated, expenseRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

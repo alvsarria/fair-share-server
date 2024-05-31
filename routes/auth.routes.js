@@ -91,7 +91,7 @@ router.post("/login", (req, res, next) => {
         // If the user is not found, send an error response
         res.status(401).json({ message: "User not found." });
         return;
-      }
+      };
 
       // Compare the provided password with the one saved in the database
       const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
@@ -112,7 +112,7 @@ router.post("/login", (req, res, next) => {
         // Send the token as the response
         res.status(200).json({ authToken: authToken });
       } else {
-        res.status(401).json({ message: "Unable to authenticate the user" });
+        res.status(401).json({ message: "Password Incorrect" });
       }
     })
     .catch((error) => next(error)); // In this case, we send error handling to the error handling middleware.
