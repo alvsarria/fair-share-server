@@ -6,6 +6,7 @@ const userSchema = new Schema({
   lastName: { type: String, required: true },
   dateOfBirth: { type: Date, required: true },
   phoneNumber: { type: String, required: true },
+  profilePic: { type: String, default: "https://static1.colliderimages.com/wordpress/wp-content/uploads/2022/06/Gandalf-Lord-Of-The-Rings-You-Shall-Not-Pass.jpg" },
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true }
 },

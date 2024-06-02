@@ -98,7 +98,7 @@ router.post("/login", (req, res, next) => {
 
       if (passwordCorrect) {
         // Deconstruct the user object to omit the password
-        const { _id, email, name } = foundUser;
+        const { _id, email, name, profilePic } = foundUser;
 
         // Create an object that will be set as the token payload
         const payload = { _id, email, name };
@@ -110,7 +110,7 @@ router.post("/login", (req, res, next) => {
         });
 
         // Send the token as the response
-        res.status(200).json({ authToken: authToken, data: { _id, name } });
+        res.status(200).json({ authToken: authToken, data: { _id, name, profilePic } });
       } else {
         res.status(401).json({ message: "Password Incorrect" });
       }
