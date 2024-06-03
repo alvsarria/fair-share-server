@@ -2,15 +2,16 @@ const { Schema, model } = require("mongoose");
 
 const groupSchema = new Schema({
   name: { type: String, required: true },
+  description: { type: String, required: true },
   expenses: [{
     type: Schema.Types.ObjectId,
     ref: "Expense"
   }],
-  admin: {
+  groupAuthor: {
     type: Schema.Types.ObjectId,
     ref: "User"
   },
-  users: [{
+  groupUsers: [{
     type: Schema.Types.ObjectId,
     ref: "User"
   }],
