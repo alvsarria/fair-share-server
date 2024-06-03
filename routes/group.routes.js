@@ -56,7 +56,7 @@ router.delete("/", (req, res, next) => {
 // Routes for groups with req.params
 
 // Gets a specific group based on url params from details page - Details page
-router.get("/:groupId", (req, res, next) => {
+router.get("/details/:groupId", (req, res, next) => {
   const { groupId } = req.params;
 
   // Checks _id is a valid object type for our model
