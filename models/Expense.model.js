@@ -28,7 +28,8 @@ const expenseSchema = new Schema({
   expensePayers: [{
     type: Schema.Types.ObjectId,
     ref: "User"
-  }]
+  }],
+  expensePic: { type: String, default: "https://tgcxojdndrjkwxfwxjvw.supabase.co/storage/v1/object/public/fair-share/profile_picture_6659aedd0ba6e3a417794481_795878.png" },
 },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

@@ -13,7 +13,8 @@ const groupSchema = new Schema({
   users: [{
     type: Schema.Types.ObjectId,
     ref: "User"
-  }]
+  }],
+  groupPic: { type: String, default: "https://tgcxojdndrjkwxfwxjvw.supabase.co/storage/v1/object/public/fair-share/profile_picture_6659aedd0ba6e3a417794481_388493.png" },
 },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
