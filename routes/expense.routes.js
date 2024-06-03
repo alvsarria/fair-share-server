@@ -9,12 +9,14 @@ const Expense = require("../models/Expense.model")
 // Routes for groups without req.params
 
 // Gets all expenses
-router.get("/", (req, res, next) => {
-    Expense.find()
+router.get("/details/:expenseId", (req, res, next) => {
+    const {expenseId} = req.params
+    Expense.find({users: expenseId})
         // .populate("expenses users")
         .then((allExpenses) => res.json(allExpenses))
         .catch((error) => res.json(error));
 });
+
 
 // Creates a new expense and updates group collection that the expense is part of
 router.post("/", (req, res, next) => {
@@ -26,7 +28,7 @@ router.post("/", (req, res, next) => {
         })
         .then((updatedGroup) => res.json(updatedGroup))
         .catch((error) => res.json(error));
-});
+}); 
 
 // Deletes expense
 router.delete("/", (req, res, next) => {
@@ -68,7 +70,7 @@ router.get("/:groupId", (req, res, next) => {
     };
 
     Group.findById(groupId)
-        .populate("expenses users")
+        .populate("groupExpenses groupUsers")
         .then((response) => res.json(response))
         .catch((error) => res.json(error));
 });
@@ -114,5 +116,9 @@ router.delete("/:groupId", (req, res, next) => {
         .then((deletedGroup) => res.status(202).json(deletedGroup))
         .catch((error) => res.json(error));
 });
+
+//to dos: 
+
+
 
 module.exports = router;

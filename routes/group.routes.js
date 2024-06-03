@@ -11,7 +11,7 @@ const Expense = require("../models/Expense.model")
 // Gets all projects - Home Page
 router.get("/:userId", (req, res, next) => {
   const {userId} = req.params;
-  Group.find({ users: userId })
+  Group.find({ groupUsers: userId })
     // .populate("expenses users")
     .then((allGroups) => res.json(allGroups))
     .catch((error) => res.json(error));
