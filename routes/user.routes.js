@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 
 // importing User.model
@@ -29,8 +30,20 @@ router.put("/:userId", (req, res, next) => {
       };
 
     User.findByIdAndUpdate(userId, req.body, {new: true})
-    .then(() => res.status(202).json({message: "User updated!"}))
-    .catch((error) => res.json(error));
+    .then((userUpdated) => {
+        const { _id, email, name, profilePic } = userUpdated;
+
+        // Create an object that will be set as the token payload
+        const payload = { _id, email, name, profilePic };
+
+        // Create a JSON Web Token and sign it
+        const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+          algorithm: "HS256",
+          expiresIn: "6h",
+        });
+        res.status(202).json({userUpdated, authToken, message: "User updated!"});
+    })
+    .catch((error) => res.status(400).json(error));
 })
 
 module.exports = router;
