@@ -12,7 +12,7 @@ const Expense = require("../models/Expense.model")
 router.get("/:userId", (req, res, next) => {
   const {userId} = req.params;
   Group.find({ groupUsers: userId })
-    // .populate("expenses users")
+    .populate("groupExpenses groupUsers")
     .then((allGroups) => res.json(allGroups))
     .catch((error) => res.json(error));
 });
@@ -66,7 +66,7 @@ router.get("/details/:groupId", (req, res, next) => {
   };
 
   Group.findById(groupId)
-    .populate("expenses users")
+    .populate("groupExpenses groupUsers groupAuthor")
     .then((response) => res.json(response))
     .catch((error) => res.json(error));
 });

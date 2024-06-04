@@ -10,9 +10,9 @@ const Expense = require("../models/Expense.model")
 
 // Gets all expenses
 router.get("/details/:expenseId", (req, res, next) => {
-    const {expenseId} = req.params
-    Expense.find({users: expenseId})
-        // .populate("expenses users")
+    const { expenseId } = req.params
+    Expense.findById(expenseId)
+        .populate("expenseAuthor expenseUsers")
         .then((allExpenses) => res.json(allExpenses))
         .catch((error) => res.json(error));
 });
@@ -28,32 +28,32 @@ router.post("/", (req, res, next) => {
         })
         .then((updatedGroup) => res.json(updatedGroup))
         .catch((error) => res.json(error));
-}); 
+});
 
 // Deletes expense
-router.delete("/", (req, res, next) => {
-    const { _id, userId } = req.body;
+router.delete("/:groupId/:userId/:expenseId", (req, res, next) => {
+    const { expenseId, userId, groupId } = req.params;
 
     // Checks _id is a valid object type for our model
-    if (!mongoose.Types.ObjectId.isValid(_id)) {
+    if (!mongoose.Types.ObjectId.isValid(expenseId)) {
         res.status(400).json({ message: "Specified id is not valid" });
         return;
     };
 
     // Only admin can delete group, we sent the userid through the request and check if it is
     // an admin of the group that wants to delete
-    Group.findById(_id)
+    Expense.findByIdAndDelete(expenseId)
         .then((response) => {
 
-            if (response.admin != userId) {
-                res.status(400).json({ message: "You are not an admin for this group" })
-                return;
-            }
+            // if (response.expenseAuthor !== userId) {
+            //     res.status(400).json({ message: [groupId, userId, expenseId] })
+            //     return;
+            // };
 
             // return promise here to concatonate next promises
-            return Group.findByIdAndDelete(_id)
+            return Group.findByIdAndUpdate(groupId, { $pull: { groupExpenses: expenseId } }, { new: true });
         })
-        .then((deletedGroup) => res.status(202).json(deletedGroup))
+        .then((deletedExpense) => res.status(202).json({ message: "lol" }))
         .catch((error) => res.json(error));
 });
 

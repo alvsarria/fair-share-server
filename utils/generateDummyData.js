@@ -151,6 +151,7 @@ for (let i = 0; i < 150; i++) {
     };
     groups.push(group);
 }
+
 // Write to JSON files
 fs.writeFileSync('./dummy_data/dummy_users.json', JSON.stringify(users, null, 4));
 fs.writeFileSync('./dummy_data/dummy_groups.json', JSON.stringify(groups, null, 4));
