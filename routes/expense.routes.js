@@ -20,15 +20,14 @@ router.get("/details/:expenseId", (req, res, next) => {
 
 // Creates a new expense and updates group collection that the expense is part of
 router.post("/", (req, res, next) => {
-    const { name, concept, amount, group, userId, expensePayers } = req.body;
+    const { name, concept,description, amount, group, expenseAuthor, expensePayers } = req.body;
 
-    Expense.create({ name, concept, amount, group, expenseAuthor: userId, expensePayers })
-        .then((newExpense) => {
-            return Group.findByIdAndUpdate(group, { $push: { expenses: newExpense._id } }, { new: true })
-        })
-        .then((updatedGroup) => res.json(updatedGroup))
+    Expense.create({ name, concept,description, amount, group, expenseAuthor, expensePayers })
+        .then((response) => res.status(201).json(response))
         .catch((error) => res.json(error));
 }); 
+
+
 
 // Deletes expense
 router.delete("/", (req, res, next) => {
@@ -117,8 +116,35 @@ router.delete("/:groupId", (req, res, next) => {
         .catch((error) => res.json(error));
 });
 
-//to dos: 
 
+
+//to dos: put request with expense id, delete request  with expense id, post request group id
+router.put("/expense/:expenseId", (req, res, next) => {
+    const { expenseId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(expenseId)) {
+        res.status(400).json({ message: "Specified id is not valid" });
+        return;
+    }
+
+    Expense.findByIdAndUpdate(expenseId, req.body, { new: true })
+        .then((updatedExpense) => res.json(updatedExpense))
+        .catch((error) => res.json(error));
+});
+
+
+router.delete("/expense/:expenseId", (req, res, next) => {
+    const { expenseId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(expenseId)) {
+        res.status(400).json({ message: "Specified id is not valid" });
+        return;
+    }
+
+    Expense.findByIdAndDelete(expenseId)
+        .then((deletedExpense) => res.status(202).json(deletedExpense))
+        .catch((error) => res.json(error));
+});
 
 
 module.exports = router;

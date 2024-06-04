@@ -9,7 +9,8 @@ const groupSchema = new Schema({
   }],
   groupAuthor: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+    required:true
   },
   groupUsers: [{
     type: Schema.Types.ObjectId,
