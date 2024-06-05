@@ -199,7 +199,7 @@ const data =
 // };
 
 const handleSelectUsers = (data) => {
-    const result = data.groupUsers.map((user) => { return { value: user._id, label: `${user.name} ${user.lastName}` } })
-    return result
-}
+    const result = data.groupUsers.map((user) => { return { value: user._id, label: `${user.name} ${user.lastName}` } });
+    return result;
+};
 console.log(handleSelectUsers(data));

@@ -75,16 +75,16 @@ router.get("/:groupId", (req, res, next) => {
 });
 
 // Updates group information based on url params from details page - Details page
-router.put("/:groupId", (req, res, next) => {
-    const { groupId } = req.params;
+router.put("/:expenseId", (req, res, next) => {
+    const { expenseId } = req.params;
 
     // Checks _id is a valid object type for our model
-    if (!mongoose.Types.ObjectId.isValid(groupId)) {
+    if (!mongoose.Types.ObjectId.isValid(expenseId)) {
         res.status(400).json({ message: "Specified id is not valid" });
         return;
     };
 
-    Group.findByIdAndUpdate(groupId, req.body, { new: true })
+    Expense.findByIdAndUpdate(expenseId, req.body, { new: true })
         .then((response) => res.json(response))
         .catch((error) => res.json(error));
 });
