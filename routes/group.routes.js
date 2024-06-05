@@ -62,6 +62,7 @@ router.put("/:groupId", (req, res, next) => {
     return;
   };
 
+  console.log(req.body)
   Group.findByIdAndUpdate(groupId, req.body, { new: true })
     .then((response) => res.json(response))
     .catch((error) => res.json(error));
