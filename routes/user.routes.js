@@ -15,6 +15,14 @@ router.get("/:userId", (req, res, next) => {
         .catch((error) => res.json(error));
 });
 
+// Gets user details
+router.get("/", (req, res, next) => {
+    User.find()
+        // .populate("expenses users")
+        .then((User) => res.json(User))
+        .catch((error) => res.json(error));
+});
+
 // Updates user details
 router.put("/:userId", (req, res, next) => {
     const {userId} = req.params;
