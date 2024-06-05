@@ -10,7 +10,7 @@ const Expense = require("../models/Expense.model")
 
 // Gets all projects - Home Page
 router.get("/:userId", (req, res, next) => {
-  const {userId} = req.params;
+  const { userId } = req.params;
   Group.find({ groupUsers: userId })
     .populate("groupExpenses groupUsers")
     .then((allGroups) => res.json(allGroups))
@@ -19,7 +19,7 @@ router.get("/:userId", (req, res, next) => {
 
 // Creates new group for expenses - Home Page
 router.post("/", (req, res, next) => {
-  
+
   Group.create(req.body)
     .then((response) => res.status(201).json(response))
     .catch((error) => res.json(error));
@@ -27,11 +27,11 @@ router.post("/", (req, res, next) => {
 
 // Deletes group - Home Page
 router.delete("/:groupId", (req, res, next) => {
-  const{groupId} = req.params;
+  const { groupId } = req.params;
   Group.findByIdAndDelete(groupId)
-  .then((response) => res.json(response))
-  .catch((error) => res.json(error));
-  
+    .then((response) => res.json(response))
+    .catch((error) => res.json(error));
+
 });
 
 // Routes for groups with req.params
@@ -63,6 +63,14 @@ router.put("/:groupId", (req, res, next) => {
   };
 
   Group.findByIdAndUpdate(groupId, req.body, { new: true })
+    .then((response) => res.json(response))
+    .catch((error) => res.json(error));
+});
+
+router.put("/:groupId/:expenseId", (req, res, next) => {
+  const { groupId, expenseId } = req.params;
+
+  Group.findByIdAndUpdate(groupId, { $push: { groupExpenses: expenseId } }, { new: true })
     .then((response) => res.json(response))
     .catch((error) => res.json(error));
 });

@@ -20,10 +20,10 @@ router.get("/details/:expenseId", (req, res, next) => {
 
 // Creates a new expense and updates group collection that the expense is part of
 router.post("/", (req, res, next) => {
-    const { name, concept,description, amount, group, expenseAuthor, expensePayers } = req.body;
+    // const { name, concept,description, amount, group, expenseAuthor, expenseUsers } = req.body;
 
-    Expense.create({ name, concept,description, amount, group, expenseAuthor, expensePayers })
-        .then((response) => res.status(201).json(response))
+    Expense.create(req.body)
+        .then((response) => res.status(200).json(response))
         .catch((error) => res.json(error));
 });
 
